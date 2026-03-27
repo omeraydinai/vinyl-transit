@@ -197,7 +197,7 @@
     }
 
     #hero .hero-logo {
-      font-size: clamp(3.5rem, 12vw, 9rem);
+      font-size: clamp(1.8rem, 10vw, 9rem);
       font-weight: 900;
       letter-spacing: 0.03em;
       line-height: 1;
@@ -354,13 +354,54 @@
       padding-bottom: 56.25%;
       background: #111;
       overflow: hidden;
+      cursor: pointer;
     }
 
-    .yt-wrap iframe {
+    .yt-wrap iframe,
+    .yt-thumb {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
       border: none;
+    }
+
+    .yt-thumb {
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Play butonu */
+    .yt-play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px;
+      height: 64px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+      pointer-events: none;
+    }
+
+    .yt-wrap:hover .yt-play {
+      background: var(--red);
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .yt-play svg {
+      width: 26px;
+      height: 26px;
+      fill: var(--white);
+      margin-left: 4px; /* görsel ortalama düzeltmesi */
+    }
+
+    /* Thumbnail gizlendikten sonra iframe görünür */
+    .yt-wrap.playing .yt-thumb,
+    .yt-wrap.playing .yt-play {
+      display: none;
     }
 
     .mix-info {
@@ -418,7 +459,7 @@
     /* =========================================
        INSTAGRAM
     ========================================= */
-    #instagram {
+    #yazilar {
       padding: 90px 5%;
     }
 
@@ -658,7 +699,7 @@
     ========================================= */
     @media (max-width: 600px) {
       .section { padding: 60px 5%; }
-      #yazilar, #mixler, #instagram, #hakkinda, #footer { padding: 60px 5%; }
+      #yazilar, #mixler, #hakkinda, #footer { padding: 60px 5%; }
 
       .yazilar-grid,
       .mixler-grid {
@@ -701,7 +742,6 @@
       <a href="#yazilar">Yazılar</a>
       <a href="#mixler">Mixler</a>
       <a href="#hakkinda">Hakkında</a>
-      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
     </nav>
 
     <!-- Mobil hamburger -->
@@ -715,7 +755,6 @@
     <a href="#yazilar"  onclick="closeMobileMenu()">Yazılar</a>
     <a href="#mixler"   onclick="closeMobileMenu()">Mixler</a>
     <a href="#hakkinda" onclick="closeMobileMenu()">Hakkında</a>
-    <a href="https://instagram.com" target="_blank" rel="noopener" onclick="closeMobileMenu()">Instagram</a>
   </nav>
 
   <!-- =========================================
@@ -726,7 +765,7 @@
       <span class="vinyl">VINYL</span>
       <span class="transit">TRANSİT</span>
     </h1>
-    <p class="manifesto">Müziği Taşıyan Sesler · Geçmişten Geleceğe Bir Rehber</p>
+    <p class="manifesto">KÜRASYON, ARŞİV, MİX.</p>
 
     <!-- Aşağı ok -->
     <a class="scroll-arrow" href="#yazilar" aria-label="Aşağı kaydır">
@@ -734,63 +773,6 @@
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>
     </a>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- =========================================
-       YAZILAR
-  ========================================= -->
-  <section id="yazilar">
-    <h2 class="section-title reveal">Yazı<span>lar</span></h2>
-
-    <div class="yazilar-grid">
-
-      <!-- Kart 1 -->
-      <article class="card yazi-card reveal">
-        <span class="seri">Plak Tarihi</span>
-        <h3>33 Devirden Dijitale: Vinylin Beklenmedik Dönüşü</h3>
-        <p class="ozet">Streamingin her şeyi yutuyor gigöründüğü bir çağda plak satışları neden 2005'ten bu yana sürekli yükseliyor? Koleksiyonerler, prodüktörler ve müzik dinleyicileriyle konuştuk.</p>
-        <div class="card-footer">
-          <span class="tarih">12 Mart 2026</span>
-          <a class="btn-oku" href="#">Oku</a>
-        </div>
-      </article>
-
-      <!-- Kart 2 -->
-      <article class="card yazi-card reveal">
-        <span class="seri">Sahne Arkası</span>
-        <h3>İstanbul'un Gece Kulüplerinde Bir DJ Olmak: Görünmez Emek</h3>
-        <p class="ozet">Saat 02.00'deki setten çok daha önce başlayan bir süreç var. Dijital plak çantasının içinden bir DJ'in haftasına baktık; müzik seçimi, teknik hazırlık ve kimlik meselesi üzerine.</p>
-        <div class="card-footer">
-          <span class="tarih">28 Şubat 2026</span>
-          <a class="btn-oku" href="#">Oku</a>
-        </div>
-      </article>
-
-      <!-- Kart 3 -->
-      <article class="card yazi-card reveal">
-        <span class="seri">Küresel Sahne</span>
-        <h3>Detroit'ten Sofya'ya: Tekno'nun 40 Yıllık Küresel Yolculuğu</h3>
-        <p class="ozet">1985'te birkaç siyahi Amerikalı gencin elektronik müzik deneyi nasıl oldu da dünya genelinde milyonlarca insanın kültürel kimliğine dönüştü? Sosyolojik bir izlek.</p>
-        <div class="card-footer">
-          <span class="tarih">14 Şubat 2026</span>
-          <a class="btn-oku" href="#">Oku</a>
-        </div>
-      </article>
-
-      <!-- Kart 4 -->
-      <article class="card yazi-card reveal">
-        <span class="seri">Kültür & Kimlik</span>
-        <h3>Arabesk'in Geri Dönüşü: Nostalji mi, Direniş mi?</h3>
-        <p class="ozet">90'ların kenar mahalle kaseti estetiği yeniden moda. Genç prodüktörler bu sesi yeniden üretiyor ama motivasyonları çok farklı. Arabeskin bugünkü anlamını sorguladık.</p>
-        <div class="card-footer">
-          <span class="tarih">3 Şubat 2026</span>
-          <a class="btn-oku" href="#">Oku</a>
-        </div>
-      </article>
-
-    </div>
   </section>
 
   <div class="section-divider"></div>
@@ -813,7 +795,7 @@
   <!-- =========================================
        INSTAGRAM
   ========================================= -->
-  <section id="instagram">
+  <section id="yazilar">
     <h2 class="section-title reveal">YAZILAR</h2>
 
     <div class="carousel-grid">
@@ -868,37 +850,18 @@
   <section id="hakkinda">
     <h2 class="section-title reveal">Hakkı<span>mızda</span></h2>
 
-    <div class="hakkinda-inner">
-
-      <div class="hakkinda-metin reveal">
-        <p>
-          Vinyl Transit, müziği bir kültür nesnesi olarak ele alan bağımsız bir kürasyon platformudur.
-          İstanbul merkezli yazar ve DJ kolektifi tarafından 2022'de kuruldu.
-        </p>
-        <p>
-          Yazı serilerimizde elektronik müziğin tarihsel kökenlerini, sahne dinamiklerini ve sosyolojik
-          boyutlarını araştırıyoruz. Mixlerimizde ise hem tanıdık hem de keşfedilmemiş seçkileri paylaşıyoruz.
-        </p>
-        <p>
-          Amacımız basit: müziği ciddiye alanlar için ciddi bir kaynak olmak. Algoritma değil, insan küratörlüğü.
-        </p>
-      </div>
-
-      <div class="hakkinda-stats reveal">
-        <div class="stat-item">
-          <span class="sayi">80+</span>
-          <span class="etiket">Yayımlanmış Yazı</span>
-        </div>
-        <div class="stat-item">
-          <span class="sayi">40+</span>
-          <span class="etiket">Küratöryal Mix</span>
-        </div>
-        <div class="stat-item">
-          <span class="sayi">12K</span>
-          <span class="etiket">Aylık Okuyucu</span>
-        </div>
-      </div>
-
+    <div class="hakkinda-metin reveal">
+      <p>
+        Vinyl Transit elektronik müzik odaklı bir kürasyon ve arşiv projesidir. Amaç hızlı tüketilen müzik yerine,
+        bağlamı olan, zamana dayanıklı parçaları seçmek ve paylaşmaktır.
+      </p>
+      <p>
+        Proje; techno, house, trance, dub ve deneysel elektronik müzik etrafında şekillenir. DJ mix'ler,
+        hidden track paylaşımları, yazılar ve arşiv içerikleriyle bir ses haritası oluşturur.
+      </p>
+      <p>
+        Vinyl Transit bir algoritma değil, bir seçkidir.
+      </p>
     </div>
   </section>
 
@@ -950,14 +913,18 @@
         card.className = 'card mix-card reveal';
 
         card.innerHTML = `
-          <div class="yt-wrap">
-            <iframe
-              src="https://www.youtube.com/embed/${mix.id}?rel=0&modestbranding=1"
-              title="Vinyl Transit Mix"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              loading="lazy">
-            </iframe>
+          <div class="yt-wrap" data-id="${mix.id}">
+            <img
+              class="yt-thumb"
+              src="https://img.youtube.com/vi/${mix.id}/maxresdefault.jpg"
+              alt="Vinyl Transit Mix"
+              loading="lazy"
+            />
+            <div class="yt-play">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="5,3 19,12 5,21"/>
+              </svg>
+            </div>
           </div>
           <div class="mix-info">
             <div class="mix-footer">
@@ -973,6 +940,19 @@
             </div>
           </div>
         `;
+
+        // Tıklayınca thumbnail'i kaldır, iframe yükle
+        card.querySelector('.yt-wrap').addEventListener('click', function() {
+          const wrap = this;
+          const id   = wrap.dataset.id;
+          wrap.classList.add('playing');
+          const iframe = document.createElement('iframe');
+          iframe.src         = 'https://www.youtube-nocookie.com/embed/' + id + '?rel=0&modestbranding=1&autoplay=1';
+          iframe.title       = 'Vinyl Transit Mix';
+          iframe.allow       = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+          iframe.allowFullscreen = true;
+          wrap.appendChild(iframe);
+        });
 
         grid.appendChild(card);
       });
