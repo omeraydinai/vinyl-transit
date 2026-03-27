@@ -814,7 +814,7 @@
        INSTAGRAM
   ========================================= -->
   <section id="instagram">
-    <h2 class="section-title reveal">INSTAGRAM</h2>
+    <h2 class="section-title reveal">YAZILAR</h2>
 
     <div class="carousel-grid">
 
@@ -932,24 +932,9 @@
     ------------------------------------------ */
     const CONFIG = {
       mixes: [
-        {
-          id:         'dQw4w9WgXcQ',          // ← YouTube video ID
-          title:      'Vinyl Transit Mix #01 — Depo',
-          aciklama:   'Depo\'da gerçekleştirilen ilk etkinliğimizden ham kayıt. Derin, katmanlı ve geç saatin sesi.',
-          tarih:      '15 Mart 2026'
-        },
-        {
-          id:         '9bZkp7q19f0',          // ← YouTube video ID
-          title:      'Vinyl Transit Mix #02 — Stüdyo Seçkisi',
-          aciklama:   'Stüdyo ortamında hazırlanan ve yalnızca dijital kanallarımızda yayımlanan ikinci seçkimiz.',
-          tarih:      '1 Mart 2026'
-        },
-        {
-          id:         'kJQP7kiw5Fk',          // ← YouTube video ID
-          title:      'Vinyl Transit Mix #03 — Vinyl Only',
-          aciklama:   'Tamamen plaktan. Dijital yok, kılavuz yok; yalnızca iğne, kasa ve seçki.',
-          tarih:      '12 Şubat 2026'
-        }
+        { id: 'DPeJ2OT6PMk' },
+        { id: 'Lo9mKl-2Z9M' },
+        { id: '9KzjbyCAAsQ' }
       ]
     };
 
@@ -967,18 +952,15 @@
         card.innerHTML = `
           <div class="yt-wrap">
             <iframe
-              src="https://www.youtube-nocookie.com/embed/${mix.id}"
-              title="${mix.title}"
+              src="https://www.youtube.com/embed/${mix.id}?rel=0&modestbranding=1"
+              title="Vinyl Transit Mix"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
               loading="lazy">
             </iframe>
           </div>
           <div class="mix-info">
-            <h3>${mix.title}</h3>
-            <p class="aciklama">${mix.aciklama}</p>
             <div class="mix-footer">
-              <span class="mix-tarih">${mix.tarih}</span>
               <a class="btn-yt"
                  href="https://www.youtube.com/watch?v=${mix.id}"
                  target="_blank"
