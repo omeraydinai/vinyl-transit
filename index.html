@@ -35,29 +35,6 @@
       padding-bottom: 60px;
     }
 
-    /* =========================================
-       SABİT MÜZİK PLAYER
-    ========================================= */
-    #music-player {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: #111111;
-      border-top: 1px solid var(--divider);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-    }
-
-    #music-player iframe {
-      display: block;
-      width: 100%;
-      height: 60px;
-      border: none;
-    }
-
     a { color: inherit; text-decoration: none; }
 
     img { display: block; width: 100%; }
@@ -1080,11 +1057,12 @@
     })();
   </script>
 
+
   <!-- =========================================
        SABİT MÜZİK PLAYER
   ========================================= -->
-  <div id="music-player" style="position:fixed;bottom:0;left:0;right:0;height:60px;background:#111;border-top:1px solid #333;z-index:1000;overflow:hidden;">
-    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fvinyltransit%2Fvinyl-transit-underground-techno-mix-001%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share"></iframe>
+  <div id="music-player" style="position:fixed;bottom:0;left:0;right:0;height:60px;background:#111111;border-top:1px solid #333;z-index:1000;overflow:hidden;">
+    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fvinyltransit%2Fvinyl-transit-underground-techno-mix-001%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
   </div>
 
 </body>
