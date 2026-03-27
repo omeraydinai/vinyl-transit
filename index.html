@@ -422,46 +422,111 @@
       padding: 90px 5%;
     }
 
-    .instagram-grid {
+    /* Carousel grid */
+    .carousel-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 16px;
     }
 
-    .insta-card {
+    /* Tek carousel kartı */
+    .carousel-card {
       position: relative;
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 4 / 5;
       overflow: hidden;
-      cursor: pointer;
+      background: #111;
     }
 
-    /* Placeholder gradient görseller */
-    .insta-card .placeholder {
+    /* Slayt şeridi */
+    .carousel-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.35s ease;
+    }
+
+    .carousel-track img {
+      flex-shrink: 0;
       width: 100%;
       height: 100%;
+      object-fit: cover;
       display: block;
     }
 
-    .insta-card .overlay {
+    /* Ok butonları */
+    .carousel-btn {
       position: absolute;
-      inset: 0;
-      background: rgba(224, 16, 16, 0.85);
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: var(--white);
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      cursor: pointer;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.2s, background 0.2s;
+      z-index: 10;
+      padding: 0;
     }
 
-    .insta-card:hover .overlay { opacity: 1; }
+    .carousel-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--white);
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
-    .insta-card .overlay p {
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-align: center;
-      line-height: 1.5;
+    .carousel-btn.prev { left: 6px; }
+    .carousel-btn.next { right: 6px; }
+
+    .carousel-card:hover .carousel-btn { opacity: 1; }
+    .carousel-btn:hover { background: rgba(0, 0, 0, 0.8); }
+
+    /* Sayaç (3/9) */
+    .carousel-counter {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.6);
       color: var(--white);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 2px 7px;
+      z-index: 10;
+    }
+
+    /* Nokta göstergesi */
+    .carousel-dots {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 5px;
+      z-index: 10;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 90%;
+    }
+
+    .carousel-dots .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .carousel-dots .dot.active {
+      background: var(--red);
     }
 
     /* =========================================
@@ -573,7 +638,7 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .instagram-grid {
+      .carousel-grid {
         grid-template-columns: repeat(3, 1fr);
       }
 
@@ -600,8 +665,8 @@
         grid-template-columns: 1fr;
       }
 
-      .instagram-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .carousel-grid {
+        grid-template-columns: 1fr;
       }
 
       .hakkinda-stats {
@@ -749,82 +814,47 @@
        INSTAGRAM
   ========================================= -->
   <section id="instagram">
-    <h2 class="section-title reveal">Son Paylaşım<span>lar</span></h2>
+    <h2 class="section-title reveal">INSTAGRAM</h2>
 
-    <div class="instagram-grid">
+    <div class="carousel-grid">
 
-      <div class="insta-card reveal">
-        <svg class="placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#2a0a0a"/><stop offset="100%" stop-color="#1a1a2e"/>
-          </linearGradient></defs>
-          <rect width="400" height="400" fill="url(#g1)"/>
-          <circle cx="200" cy="200" r="80" fill="none" stroke="#e01010" stroke-width="2" opacity="0.4"/>
-          <circle cx="200" cy="200" r="20" fill="#e01010" opacity="0.6"/>
-        </svg>
-        <div class="overlay"><p>Yeni mix yayında — bağlantı bio'da 🔴 #vinyl #underground</p></div>
+      <!-- Post 1 — 9 slayt -->
+      <div class="carousel-card reveal" data-slides="9" data-prefix="images/post1/slide-">
+        <div class="carousel-track"></div>
+        <span class="carousel-counter">1/9</span>
+        <button class="carousel-btn prev" aria-label="Önceki">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="carousel-btn next" aria-label="Sonraki">
+          <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+        <div class="carousel-dots"></div>
       </div>
 
-      <div class="insta-card reveal">
-        <svg class="placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="g2" x1="1" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#0a1628"/><stop offset="100%" stop-color="#1a0a0a"/>
-          </linearGradient></defs>
-          <rect width="400" height="400" fill="url(#g2)"/>
-          <line x1="0" y1="200" x2="400" y2="200" stroke="#333" stroke-width="1"/>
-          <line x1="200" y1="0" x2="200" y2="400" stroke="#333" stroke-width="1"/>
-          <rect x="150" y="150" width="100" height="100" fill="none" stroke="#e01010" stroke-width="2" opacity="0.5"/>
-        </svg>
-        <div class="overlay"><p>Detroit — Chicago — Berlin. Teknonun köklerini keşfeden yeni yazı serisi başlıyor.</p></div>
+      <!-- Post 2 — 13 slayt -->
+      <div class="carousel-card reveal" data-slides="13" data-prefix="images/post2/slide-">
+        <div class="carousel-track"></div>
+        <span class="carousel-counter">1/13</span>
+        <button class="carousel-btn prev" aria-label="Önceki">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="carousel-btn next" aria-label="Sonraki">
+          <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+        <div class="carousel-dots"></div>
       </div>
 
-      <div class="insta-card reveal">
-        <svg class="placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="g3" x1="0" y1="1" x2="1" y2="0">
-            <stop offset="0%" stop-color="#1a0a1a"/><stop offset="100%" stop-color="#0a1a0a"/>
-          </linearGradient></defs>
-          <rect width="400" height="400" fill="url(#g3)"/>
-          <polygon points="200,80 340,320 60,320" fill="none" stroke="#e01010" stroke-width="2" opacity="0.4"/>
-        </svg>
-        <div class="overlay"><p>Koleksiyonundan bir kare: Kemal'in 1970'ler Türk psych plaklarından seçkisi.</p></div>
-      </div>
-
-      <div class="insta-card reveal">
-        <svg class="placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#1a1a0a"/><stop offset="100%" stop-color="#0a0a1a"/>
-          </linearGradient></defs>
-          <rect width="400" height="400" fill="url(#g4)"/>
-          <circle cx="200" cy="200" r="120" fill="none" stroke="#333" stroke-width="40" opacity="0.5"/>
-          <circle cx="200" cy="200" r="8" fill="#e01010"/>
-        </svg>
-        <div class="overlay"><p>Plak kasasından: Bu hafta yeni alımlar. Arka tarafı okumak için kaydırın.</p></div>
-      </div>
-
-      <div class="insta-card reveal">
-        <svg class="placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="g5" x1="1" y1="1" x2="0" y2="0">
-            <stop offset="0%" stop-color="#200a0a"/><stop offset="100%" stop-color="#0a0a20"/>
-          </linearGradient></defs>
-          <rect width="400" height="400" fill="url(#g5)"/>
-          <rect x="80" y="80" width="240" height="240" fill="none" stroke="#444" stroke-width="1"/>
-          <rect x="120" y="120" width="160" height="160" fill="none" stroke="#e01010" stroke-width="2" opacity="0.5"/>
-          <rect x="160" y="160" width="80" height="80" fill="#e01010" opacity="0.15"/>
-        </svg>
-        <div class="overlay"><p>Vinyl Transit × Bant Mag işbirliği: Ortak röportaj yayında!</p></div>
-      </div>
-
-      <div class="insta-card reveal">
-        <svg class="placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="g6" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#0a1a1a"/><stop offset="100%" stop-color="#1a0a1a"/>
-          </linearGradient></defs>
-          <rect width="400" height="400" fill="url(#g6)"/>
-          <line x1="80" y1="80" x2="320" y2="320" stroke="#e01010" stroke-width="2" opacity="0.4"/>
-          <line x1="320" y1="80" x2="80" y2="320" stroke="#e01010" stroke-width="2" opacity="0.4"/>
-          <circle cx="200" cy="200" r="40" fill="none" stroke="#555" stroke-width="1"/>
-        </svg>
-        <div class="overlay"><p>Vinyl Transit Podcast — 3. Bölüm: "90'lar İstanbul Sahnesi" bu Cuma yayında.</p></div>
+      <!-- Post 3 — 14 slayt -->
+      <div class="carousel-card reveal" data-slides="14" data-prefix="images/post3/slide-">
+        <div class="carousel-track"></div>
+        <span class="carousel-counter">1/14</span>
+        <button class="carousel-btn prev" aria-label="Önceki">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="carousel-btn next" aria-label="Sonraki">
+          <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+        <div class="carousel-dots"></div>
       </div>
 
     </div>
@@ -1041,6 +1071,64 @@
       if (menu) menu.classList.remove('open');
       if (btn)  btn.classList.remove('open');
     }
+
+    /* ------------------------------------------
+       CAROUSEL — Instagram bölümü
+       Görseller: images/postN/slide-01.jpg ... slide-NN.jpg
+    ------------------------------------------ */
+    (function initCarousels() {
+      document.querySelectorAll('.carousel-card').forEach(function(card) {
+        const total   = parseInt(card.dataset.slides, 10);
+        const prefix  = card.dataset.prefix;          // örn. "images/post1/slide-"
+        const track   = card.querySelector('.carousel-track');
+        const counter = card.querySelector('.carousel-counter');
+        const dotsEl  = card.querySelector('.carousel-dots');
+        const prevBtn = card.querySelector('.carousel-btn.prev');
+        const nextBtn = card.querySelector('.carousel-btn.next');
+
+        let current = 0;
+
+        // Görselleri oluştur
+        for (let i = 1; i <= total; i++) {
+          const img = document.createElement('img');
+          const num = String(i).padStart(2, '0');
+          img.src   = prefix + num + '.png';
+          img.alt   = 'Slayt ' + i;
+          img.loading = i === 1 ? 'eager' : 'lazy';
+          track.appendChild(img);
+        }
+
+        // Noktaları oluştur
+        for (let i = 0; i < total; i++) {
+          const dot = document.createElement('span');
+          dot.className = 'dot' + (i === 0 ? ' active' : '');
+          dot.addEventListener('click', function() { goTo(i); });
+          dotsEl.appendChild(dot);
+        }
+
+        function goTo(index) {
+          current = (index + total) % total;
+          track.style.transform = 'translateX(-' + (current * 100) + '%)';
+          counter.textContent   = (current + 1) + '/' + total;
+          dotsEl.querySelectorAll('.dot').forEach(function(d, i) {
+            d.classList.toggle('active', i === current);
+          });
+        }
+
+        prevBtn.addEventListener('click', function() { goTo(current - 1); });
+        nextBtn.addEventListener('click', function() { goTo(current + 1); });
+
+        // Dokunmatik kaydırma (mobil)
+        let touchStartX = 0;
+        card.addEventListener('touchstart', function(e) {
+          touchStartX = e.changedTouches[0].clientX;
+        }, { passive: true });
+        card.addEventListener('touchend', function(e) {
+          const diff = touchStartX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+        }, { passive: true });
+      });
+    })();
   </script>
 
 </body>
