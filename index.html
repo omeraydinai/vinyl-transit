@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vinyl Transit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================
+       RESET & BASE
+    ========================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #1a1a1a;
+      --bg-card:   #222222;
+      --red:       #e01010;
+      --white:     #ffffff;
+      --grey:      #aaaaaa;
+      --divider:   #333333;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    img { display: block; width: 100%; }
+
+    /* =========================================
+       UTILITY
+    ========================================= */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--divider);
+    }
+
+    .section {
+      padding: 90px 5%;
+    }
+
+    .section-title {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+    }
+
+    .section-title span {
+      color: var(--red);
+    }
+
+    /* Scroll-reveal: bölümler başlangıçta görünmez */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================================
+       LOGO COMPONENT (paylaşımlı)
+    ========================================= */
+    .logo {
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.2em;
+    }
+    .logo .vinyl  { color: var(--white); }
+    .logo .transit { color: var(--red); }
+
+    /* =========================================
+       STICKY NAVBAR
+    ========================================= */
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(26, 26, 26, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--divider);
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+
+      /* Başlangıçta gizli — hero logosu görevini üstleniyor */
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    #navbar.visible {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    #navbar .logo {
+      font-size: 1.15rem;
+    }
+
+    #navbar nav {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    #navbar nav a {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      transition: color 0.2s;
+    }
+
+    #navbar nav a:hover { color: var(--white); }
+
+    /* Hamburger (mobil) */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      width: 100%;
+      background: rgba(26, 26, 26, 0.98);
+      border-bottom: 1px solid var(--divider);
+      padding: 1.5rem 5%;
+      flex-direction: column;
+      gap: 1.2rem;
+      z-index: 999;
+    }
+    .mobile-menu a {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+    .mobile-menu a:hover { color: var(--white); }
+    .mobile-menu.open { display: flex; }
+
+    /* =========================================
+       HERO
+    ========================================= */
+    #hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 0 5%;
+    }
+
+    #hero .hero-logo {
+      font-size: clamp(3.5rem, 12vw, 9rem);
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      line-height: 1;
+      margin-bottom: 1.8rem;
+    }
+
+    #hero .manifesto {
+      font-size: clamp(0.8rem, 2vw, 1.05rem);
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--grey);
+      max-width: 600px;
+    }
+
+    /* Aşağı ok animasyonu */
+    .scroll-arrow {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      animation: bounce 2s infinite;
+    }
+    .scroll-arrow svg {
+      width: 28px;
+      height: 28px;
+      stroke: var(--red);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* =========================================
+       KARTI (paylaşımlı kart stili)
+    ========================================= */
+    .card {
+      background: var(--bg-card);
+      border-top: 3px solid transparent;
+      transition: border-color 0.25s ease, transform 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      border-color: var(--red);
+      transform: translateY(-4px);
+    }
+
+    /* =========================================
+       YAZILAR
+    ========================================= */
+    #yazilar {
+      padding: 90px 5%;
+    }
+
+    .yazilar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .yazi-card {
+      padding: 28px 24px 24px;
+    }
+
+    .yazi-card .seri {
+      display: inline-block;
+      background: var(--red);
+      color: var(--white);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      margin-bottom: 14px;
+    }
+
+    .yazi-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+
+    .yazi-card .ozet {
+      font-size: 0.82rem;
+      color: var(--grey);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+
+    .yazi-card .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .yazi-card .tarih {
+      font-size: 0.72rem;
+      color: #666;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-oku {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+      border: 1px solid var(--red);
+      padding: 5px 12px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-oku:hover {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    /* =========================================
+       MİXLER
+    ========================================= */
+    #mixler {
+      padding: 90px 5%;
+    }
+
+    .mixler-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .mix-card {
+      overflow: hidden;
+    }
+
+    /* YouTube embed wrapper — 16:9 oranını korur */
+    .yt-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .yt-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    .mix-info {
+      padding: 20px 20px 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .mix-info h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .mix-info .aciklama {
+      font-size: 0.8rem;
+      color: var(--grey);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 16px;
+    }
+
+    .mix-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mix-tarih {
+      font-size: 0.7rem;
+      color: #666;
+    }
+
+    .btn-yt {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: opacity 0.2s;
+    }
+    .btn-yt:hover { opacity: 0.75; }
+
+    .btn-yt svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--red);
+    }
+
+    /* =========================================
+       INSTAGRAM
+    ========================================= */
+    #instagram {
+      padding: 90px 5%;
+    }
+
+    .instagram-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .insta-card {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* Placeholder gradient görseller */
+    .insta-card .placeholder {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .insta-card .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(224, 16, 16, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .insta-card:hover .overlay { opacity: 1; }
+
+    .insta-card .overlay p {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.5;
+      color: var(--white);
+    }
+
+    /* =========================================
+       HAKKINDA
+    ========================================= */
+    #hakkinda {
+      padding: 90px 5%;
+    }
+
+    .hakkinda-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hakkinda-metin {
+      border-left: 4px solid var(--red);
+      padding-left: 28px;
+    }
+
+    .hakkinda-metin p {
+      font-size: 0.9rem;
+      color: var(--grey);
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+
+    .hakkinda-metin p:last-child { margin-bottom: 0; }
+
+    .hakkinda-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-item .sayi {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: var(--red);
+      line-height: 1;
+    }
+
+    .stat-item .etiket {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+    #footer {
+      padding: 60px 5% 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+    }
+
+    #footer .logo {
+      font-size: 1.6rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .footer-links a {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-mail {
+      font-size: 0.8rem;
+      color: var(--grey);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-copy {
+      font-size: 0.68rem;
+      color: #555;
+      letter-spacing: 0.08em;
+    }
+
+    /* =========================================
+       RESPONSIVE — Tablet
+    ========================================= */
+    @media (max-width: 900px) {
+      .yazilar-grid,
+      .mixler-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .instagram-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .hakkinda-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .hakkinda-stats {
+        flex-direction: row;
+        justify-content: space-around;
+      }
+    }
+
+    /* =========================================
+       RESPONSIVE — Mobil
+    ========================================= */
+    @media (max-width: 600px) {
+      .section { padding: 60px 5%; }
+      #yazilar, #mixler, #instagram, #hakkinda, #footer { padding: 60px 5%; }
+
+      .yazilar-grid,
+      .mixler-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .instagram-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hakkinda-stats {
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      #navbar nav { display: none; }
+      .hamburger { display: flex; }
+
+      .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================
+       STICKY NAVBAR
+  ========================================= -->
+  <header id="navbar">
+    <a href="#hero" class="logo">
+      <span class="vinyl">VINYL</span>
+      <span class="transit">TRANSİT</span>
+    </a>
+
+    <nav>
+      <a href="#yazilar">Yazılar</a>
+      <a href="#mixler">Mixler</a>
+      <a href="#hakkinda">Hakkında</a>
+      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+    </nav>
+
+    <!-- Mobil hamburger -->
+    <button class="hamburger" id="hamburger" aria-label="Menüyü aç">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- Mobil açılır menü -->
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#yazilar"  onclick="closeMobileMenu()">Yazılar</a>
+    <a href="#mixler"   onclick="closeMobileMenu()">Mixler</a>
+    <a href="#hakkinda" onclick="closeMobileMenu()">Hakkında</a>
+    <a href="https://instagram.com" target="_blank" rel="noopener" onclick="closeMobileMenu()">Instagram</a>
+  </nav>
+
+  <!-- =========================================
+       HERO
+  ========================================= -->
+  <section id="hero">
+    <h1 class="hero-logo logo">
+      <span class="vinyl">VINYL</span>
+      <span class="transit">TRANSİT</span>
+    </h1>
+    <p class="manifesto">Müziği Taşıyan Sesler · Geçmişten Geleceğe Bir Rehber</p>
+
+    <!-- Aşağı ok -->
+    <a class="scroll-arrow" href="#yazilar" aria-label="Aşağı kaydır">
+      <svg viewBox="0 0 24 24">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </a>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- =========================================
+       YAZILAR
+  ========================================= -->
+  <section id="yazilar">
+    <h2 class="section-title reveal">Yazı<span>lar</span></h2>
+
+    <div class="yazilar-grid">
+
+      <!-- Kart 1 -->
+      <article class="card yazi-card reveal">
+        <span class="seri">Plak Tarihi</span>
+        <h3>33 Devirden Dijitale: Vinylin Beklenmedik Dönüşü</h3>
+        <p class="ozet">Streamingin her şeyi yutuyor gigöründüğü bir çağda plak satışları neden 2005'ten bu yana sürekli yükseliyor? Koleksiyonerler, prodüktörler ve müzik dinleyicileriyle konuştuk.</p>
+        <div class="card-footer">
+          <span class="tarih">12 Mart 2026</span>
+          <a class="btn-oku" href="#">Oku</a>
+        </div>
+      </article>
+
+      <!-- Kart 2 -->
+      <article class="card yazi-card reveal">
+        <span class="seri">Sahne Arkası</span>
+        <h3>İstanbul'un Gece Kulüplerinde Bir DJ Olmak: Görünmez Emek</h3>
+        <p class="ozet">Saat 02.00'deki setten çok daha önce başlayan bir süreç var. Dijital plak çantasının içinden bir DJ'in haftasına baktık; müzik seçimi, teknik hazırlık ve kimlik meselesi üzerine.</p>
+        <div class="card-footer">
+          <span class="tarih">28 Şubat 2026</span>
+          <a class="btn-oku" href="#">Oku</a>
+        </div>
+      </article>
+
+      <!-- Kart 3 -->
+      <article class="card yazi-card reveal">
+        <span class="seri">Küresel Sahne</span>
+        <h3>Detroit'ten Sofya'ya: Tekno'nun 40 Yıllık Küresel Yolculuğu</h3>
+        <p class="ozet">1985'te birkaç siyahi Amerikalı gencin elektronik müzik deneyi nasıl oldu da dünya genelinde milyonlarca insanın kültürel kimliğine dönüştü? Sosyolojik bir izlek.</p>
+        <div class="card-footer">
+          <span class="tarih">14 Şubat 2026</span>
+          <a class="btn-oku" href="#">Oku</a>
+        </div>
+      </article>
+
+      <!-- Kart 4 -->
+      <article class="card yazi-card reveal">
+        <span class="seri">Kültür & Kimlik</span>
+        <h3>Arabesk'in Geri Dönüşü: Nostalji mi, Direniş mi?</h3>
+        <p class="ozet">90'ların kenar mahalle kaseti estetiği yeniden moda. Genç prodüktörler bu sesi yeniden üretiyor ama motivasyonları çok farklı. Arabeskin bugünkü anlamını sorguladık.</p>
+        <div class="card-footer">
+          <span class="tarih">3 Şubat 2026</span>
+          <a class="btn-oku" href="#">Oku</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- =========================================
+       MİXLER
+       YouTube ID'lerini aşağıdaki config nesnesinden değiştir:
+       bkz. <script> bloğu → CONFIG.mixes
+  ========================================= -->
+  <section id="mixler">
+    <h2 class="section-title reveal">Mix<span>ler</span></h2>
+
+    <div class="mixler-grid" id="mixlerGrid">
+      <!-- Kartlar JS ile oluşturulur — CONFIG.mixes'i düzenle -->
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- =========================================
+       INSTAGRAM
+  ========================================= -->
+  <section id="instagram">
+    <h2 class="section-title reveal">Son Paylaşım<span>lar</span></h2>
+
+    <div class="instagram-grid">
+
+      <div class="insta-card reveal">
+        <svg class="placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#2a0a0a"/><stop offset="100%" stop-color="#1a1a2e"/>
+          </linearGradient></defs>
+          <rect width="400" height="400" fill="url(#g1)"/>
+          <circle cx="200" cy="200" r="80" fill="none" stroke="#e01010" stroke-width="2" opacity="0.4"/>
+          <circle cx="200" cy="200" r="20" fill="#e01010" opacity="0.6"/>
+        </svg>
+        <div class="overlay"><p>Yeni mix yayında — bağlantı bio'da 🔴 #vinyl #underground</p></div>
+      </div>
+
+      <div class="insta-card reveal">
+        <svg class="placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="g2" x1="1" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0a1628"/><stop offset="100%" stop-color="#1a0a0a"/>
+          </linearGradient></defs>
+          <rect width="400" height="400" fill="url(#g2)"/>
+          <line x1="0" y1="200" x2="400" y2="200" stroke="#333" stroke-width="1"/>
+          <line x1="200" y1="0" x2="200" y2="400" stroke="#333" stroke-width="1"/>
+          <rect x="150" y="150" width="100" height="100" fill="none" stroke="#e01010" stroke-width="2" opacity="0.5"/>
+        </svg>
+        <div class="overlay"><p>Detroit — Chicago — Berlin. Teknonun köklerini keşfeden yeni yazı serisi başlıyor.</p></div>
+      </div>
+
+      <div class="insta-card reveal">
+        <svg class="placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="g3" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1a0a1a"/><stop offset="100%" stop-color="#0a1a0a"/>
+          </linearGradient></defs>
+          <rect width="400" height="400" fill="url(#g3)"/>
+          <polygon points="200,80 340,320 60,320" fill="none" stroke="#e01010" stroke-width="2" opacity="0.4"/>
+        </svg>
+        <div class="overlay"><p>Koleksiyonundan bir kare: Kemal'in 1970'ler Türk psych plaklarından seçkisi.</p></div>
+      </div>
+
+      <div class="insta-card reveal">
+        <svg class="placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1a1a0a"/><stop offset="100%" stop-color="#0a0a1a"/>
+          </linearGradient></defs>
+          <rect width="400" height="400" fill="url(#g4)"/>
+          <circle cx="200" cy="200" r="120" fill="none" stroke="#333" stroke-width="40" opacity="0.5"/>
+          <circle cx="200" cy="200" r="8" fill="#e01010"/>
+        </svg>
+        <div class="overlay"><p>Plak kasasından: Bu hafta yeni alımlar. Arka tarafı okumak için kaydırın.</p></div>
+      </div>
+
+      <div class="insta-card reveal">
+        <svg class="placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="g5" x1="1" y1="1" x2="0" y2="0">
+            <stop offset="0%" stop-color="#200a0a"/><stop offset="100%" stop-color="#0a0a20"/>
+          </linearGradient></defs>
+          <rect width="400" height="400" fill="url(#g5)"/>
+          <rect x="80" y="80" width="240" height="240" fill="none" stroke="#444" stroke-width="1"/>
+          <rect x="120" y="120" width="160" height="160" fill="none" stroke="#e01010" stroke-width="2" opacity="0.5"/>
+          <rect x="160" y="160" width="80" height="80" fill="#e01010" opacity="0.15"/>
+        </svg>
+        <div class="overlay"><p>Vinyl Transit × Bant Mag işbirliği: Ortak röportaj yayında!</p></div>
+      </div>
+
+      <div class="insta-card reveal">
+        <svg class="placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="g6" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0a1a1a"/><stop offset="100%" stop-color="#1a0a1a"/>
+          </linearGradient></defs>
+          <rect width="400" height="400" fill="url(#g6)"/>
+          <line x1="80" y1="80" x2="320" y2="320" stroke="#e01010" stroke-width="2" opacity="0.4"/>
+          <line x1="320" y1="80" x2="80" y2="320" stroke="#e01010" stroke-width="2" opacity="0.4"/>
+          <circle cx="200" cy="200" r="40" fill="none" stroke="#555" stroke-width="1"/>
+        </svg>
+        <div class="overlay"><p>Vinyl Transit Podcast — 3. Bölüm: "90'lar İstanbul Sahnesi" bu Cuma yayında.</p></div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- =========================================
+       HAKKINDA
+  ========================================= -->
+  <section id="hakkinda">
+    <h2 class="section-title reveal">Hakkı<span>mızda</span></h2>
+
+    <div class="hakkinda-inner">
+
+      <div class="hakkinda-metin reveal">
+        <p>
+          Vinyl Transit, müziği bir kültür nesnesi olarak ele alan bağımsız bir kürasyon platformudur.
+          İstanbul merkezli yazar ve DJ kolektifi tarafından 2022'de kuruldu.
+        </p>
+        <p>
+          Yazı serilerimizde elektronik müziğin tarihsel kökenlerini, sahne dinamiklerini ve sosyolojik
+          boyutlarını araştırıyoruz. Mixlerimizde ise hem tanıdık hem de keşfedilmemiş seçkileri paylaşıyoruz.
+        </p>
+        <p>
+          Amacımız basit: müziği ciddiye alanlar için ciddi bir kaynak olmak. Algoritma değil, insan küratörlüğü.
+        </p>
+      </div>
+
+      <div class="hakkinda-stats reveal">
+        <div class="stat-item">
+          <span class="sayi">80+</span>
+          <span class="etiket">Yayımlanmış Yazı</span>
+        </div>
+        <div class="stat-item">
+          <span class="sayi">40+</span>
+          <span class="etiket">Küratöryal Mix</span>
+        </div>
+        <div class="stat-item">
+          <span class="sayi">12K</span>
+          <span class="etiket">Aylık Okuyucu</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- =========================================
+       FOOTER
+  ========================================= -->
+  <footer id="footer">
+    <a href="#hero" class="logo">
+      <span class="vinyl">VINYL</span>
+      <span class="transit">TRANSİT</span>
+    </a>
+
+    <div class="footer-links">
+      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://youtube.com"   target="_blank" rel="noopener">YouTube</a>
+    </div>
+
+    <p class="footer-mail">iletisim@vinyltransit.com</p>
+    <p class="footer-copy">&copy; 2026 Vinyl Transit — Tüm hakları saklıdır.</p>
+  </footer>
+
+
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================= -->
+  <script>
+    /* ------------------------------------------
+       CONFIG — YouTube mix ID'lerini burada değiştir
+    ------------------------------------------ */
+    const CONFIG = {
+      mixes: [
+        {
+          id:         'dQw4w9WgXcQ',          // ← YouTube video ID
+          title:      'Vinyl Transit Mix #01 — Depo',
+          aciklama:   'Depo\'da gerçekleştirilen ilk etkinliğimizden ham kayıt. Derin, katmanlı ve geç saatin sesi.',
+          tarih:      '15 Mart 2026'
+        },
+        {
+          id:         '9bZkp7q19f0',          // ← YouTube video ID
+          title:      'Vinyl Transit Mix #02 — Stüdyo Seçkisi',
+          aciklama:   'Stüdyo ortamında hazırlanan ve yalnızca dijital kanallarımızda yayımlanan ikinci seçkimiz.',
+          tarih:      '1 Mart 2026'
+        },
+        {
+          id:         'kJQP7kiw5Fk',          // ← YouTube video ID
+          title:      'Vinyl Transit Mix #03 — Vinyl Only',
+          aciklama:   'Tamamen plaktan. Dijital yok, kılavuz yok; yalnızca iğne, kasa ve seçki.',
+          tarih:      '12 Şubat 2026'
+        }
+      ]
+    };
+
+    /* ------------------------------------------
+       Mix kartlarını oluştur
+    ------------------------------------------ */
+    (function buildMixes() {
+      const grid = document.getElementById('mixlerGrid');
+      if (!grid) return;
+
+      CONFIG.mixes.forEach(function(mix) {
+        const card = document.createElement('div');
+        card.className = 'card mix-card reveal';
+
+        card.innerHTML = `
+          <div class="yt-wrap">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/${mix.id}"
+              title="${mix.title}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy">
+            </iframe>
+          </div>
+          <div class="mix-info">
+            <h3>${mix.title}</h3>
+            <p class="aciklama">${mix.aciklama}</p>
+            <div class="mix-footer">
+              <span class="mix-tarih">${mix.tarih}</span>
+              <a class="btn-yt"
+                 href="https://www.youtube.com/watch?v=${mix.id}"
+                 target="_blank"
+                 rel="noopener">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
+                </svg>
+                YouTube'da İzle
+              </a>
+            </div>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+
+      // Yeni kartları scroll-reveal gözlemcisine ekle
+      observeRevealElements();
+    })();
+
+    /* ------------------------------------------
+       STICKY NAVBAR — hero geçince göster
+    ------------------------------------------ */
+    (function initNavbar() {
+      const navbar   = document.getElementById('navbar');
+      const hero     = document.getElementById('hero');
+      const heroLogo = hero.querySelector('.hero-logo');
+
+      const observer = new IntersectionObserver(
+        function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              navbar.classList.remove('visible');
+            } else {
+              navbar.classList.add('visible');
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      observer.observe(heroLogo);
+    })();
+
+    /* ------------------------------------------
+       SCROLL REVEAL — .reveal sınıflı elemanlar
+    ------------------------------------------ */
+    function observeRevealElements() {
+      const reveals = document.querySelectorAll('.reveal:not([data-observed])');
+
+      const observer = new IntersectionObserver(
+        function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      reveals.forEach(function(el) {
+        el.setAttribute('data-observed', '1');
+        observer.observe(el);
+      });
+    }
+
+    // İlk çalıştırma (mix kartları hariç diğerleri için)
+    document.addEventListener('DOMContentLoaded', observeRevealElements);
+
+    /* ------------------------------------------
+       MOBİL HAMBURGER MENÜ
+    ------------------------------------------ */
+    (function initHamburger() {
+      const btn  = document.getElementById('hamburger');
+      const menu = document.getElementById('mobileMenu');
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', function() {
+        const isOpen = menu.classList.toggle('open');
+        btn.classList.toggle('open', isOpen);
+        btn.setAttribute('aria-expanded', isOpen);
+      });
+    })();
+
+    function closeMobileMenu() {
+      const btn  = document.getElementById('hamburger');
+      const menu = document.getElementById('mobileMenu');
+      if (menu) menu.classList.remove('open');
+      if (btn)  btn.classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>
