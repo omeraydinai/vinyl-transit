@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231a1a1a'/%3E%3Ctext x='3' y='24' font-family='Montserrat,sans-serif' font-weight='900' font-size='18' fill='%23e01010'%3EVT%3C/text%3E%3C/svg%3E">
 
   <style>
     /* =========================================
@@ -31,6 +32,30 @@
       font-family: 'Montserrat', sans-serif;
       line-height: 1.6;
       overflow-x: hidden;
+      padding-bottom: 60px;
+    }
+
+    /* =========================================
+       SABİT MÜZİK PLAYER
+    ========================================= */
+    #music-player {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #111111;
+      border-top: 1px solid var(--divider);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+    }
+
+    #music-player iframe {
+      display: block;
+      width: 100%;
+      height: 60px;
+      border: none;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -47,7 +72,7 @@
     }
 
     .section {
-      padding: 90px 5%;
+      padding: 40px 5%;
     }
 
     .section-title {
@@ -55,23 +80,13 @@
       font-weight: 900;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      margin-bottom: 50px;
+      margin-bottom: 24px;
     }
 
     .section-title span {
       color: var(--red);
     }
 
-    /* Scroll-reveal: bölümler başlangıçta görünmez */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
 
     /* =========================================
        LOGO COMPONENT (paylaşımlı)
@@ -260,7 +275,7 @@
        YAZILAR
     ========================================= */
     #yazilar {
-      padding: 90px 5%;
+      padding: 40px 5%;
     }
 
     .yazilar-grid {
@@ -334,7 +349,7 @@
        MİXLER
     ========================================= */
     #mixler {
-      padding: 90px 5%;
+      padding: 40px 5%;
     }
 
     .mixler-grid {
@@ -460,7 +475,7 @@
        INSTAGRAM
     ========================================= */
     #yazilar {
-      padding: 90px 5%;
+      padding: 40px 5%;
     }
 
     /* Carousel grid */
@@ -574,7 +589,7 @@
        HAKKINDA
     ========================================= */
     #hakkinda {
-      padding: 90px 5%;
+      padding: 40px 5%;
     }
 
     .hakkinda-inner {
@@ -629,7 +644,7 @@
        FOOTER
     ========================================= */
     #footer {
-      padding: 60px 5% 40px;
+      padding: 40px 5% 28px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -698,8 +713,8 @@
        RESPONSIVE — Mobil
     ========================================= */
     @media (max-width: 600px) {
-      .section { padding: 60px 5%; }
-      #yazilar, #mixler, #hakkinda, #footer { padding: 60px 5%; }
+      .section { padding: 32px 5%; }
+      #yazilar, #mixler, #hakkinda, #footer { padding: 32px 5%; }
 
       .yazilar-grid,
       .mixler-grid {
@@ -848,7 +863,7 @@
        HAKKINDA
   ========================================= -->
   <section id="hakkinda">
-    <h2 class="section-title reveal">Hakkı<span>mızda</span></h2>
+    <h2 class="section-title reveal">Hakkımızda</h2>
 
     <div class="hakkinda-metin reveal">
       <p>
@@ -958,8 +973,6 @@
         grid.appendChild(card);
       });
 
-      // Yeni kartları scroll-reveal gözlemcisine ekle
-      observeRevealElements();
     })();
 
     /* ------------------------------------------
@@ -985,33 +998,6 @@
 
       observer.observe(heroLogo);
     })();
-
-    /* ------------------------------------------
-       SCROLL REVEAL — .reveal sınıflı elemanlar
-    ------------------------------------------ */
-    function observeRevealElements() {
-      const reveals = document.querySelectorAll('.reveal:not([data-observed])');
-
-      const observer = new IntersectionObserver(
-        function(entries) {
-          entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.12 }
-      );
-
-      reveals.forEach(function(el) {
-        el.setAttribute('data-observed', '1');
-        observer.observe(el);
-      });
-    }
-
-    // İlk çalıştırma (mix kartları hariç diğerleri için)
-    document.addEventListener('DOMContentLoaded', observeRevealElements);
 
     /* ------------------------------------------
        MOBİL HAMBURGER MENÜ
@@ -1093,6 +1079,13 @@
       });
     })();
   </script>
+
+  <!-- =========================================
+       SABİT MÜZİK PLAYER
+  ========================================= -->
+  <div id="music-player" style="position:fixed;bottom:0;left:0;right:0;height:60px;background:#111;border-top:1px solid #333;z-index:1000;overflow:hidden;">
+    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fvinyltransit%2Fvinyl-transit-underground-techno-mix-001%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share"></iframe>
+  </div>
 
 </body>
 </html>
