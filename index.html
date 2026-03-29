@@ -3,1067 +3,840 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vinyl Transit</title>
+  <title>Vinyl Transit — Elektronik Müzik Kürasyon & Arşivi</title>
+  <meta name="description" content="Vinyl Transit: bağlamı olan, zamana dayanıklı elektronik müzik — techno, house, trance, dub. DJ mix'ler, yazılar, arşiv." />
+  <meta property="og:title" content="Vinyl Transit" />
+  <meta property="og:description" content="Elektronik müzik kürasyon ve arşivi — techno, house, trance, dub." />
+  <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231a1a1a'/%3E%3Ctext x='3' y='24' font-family='Montserrat,sans-serif' font-weight='900' font-size='18' fill='%23e01010'%3EVT%3C/text%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23080808'/%3E%3Ctext x='3' y='24' font-family='serif' font-weight='700' font-size='16' fill='%23e01010'%3EVT%3C/text%3E%3C/svg%3E">
 
   <style>
-    /* =========================================
-       RESET & BASE
-    ========================================= */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #1a1a1a;
-      --bg-card:   #222222;
-      --red:       #e01010;
-      --white:     #ffffff;
-      --grey:      #aaaaaa;
-      --divider:   #333333;
+      --bg:     #080808;
+      --bg-2:   #0e0e0e;
+      --bg-3:   #181818;
+      --bg-4:   #242424;
+      --fg:     #f0ece4;
+      --fg-dim: #908880;
+      --fg-mut: #464240;
+      --red:    #e01010;
+      --red-hi: #ff2626;
+      --bdr:    #1c1c1c;
+      --bdr-2:  #2c2c2a;
+
+      --ff-disp: 'Cormorant Garamond', serif;
+      --ff-mono: 'DM Mono', monospace;
+      --ff-body: 'Figtree', sans-serif;
+
+      --sp1: 4px;  --sp2: 8px;  --sp3: 16px;  --sp4: 24px;
+      --sp5: 48px; --sp6: 80px; --sp7: 120px;
+
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
-      color: var(--white);
-      font-family: 'Montserrat', sans-serif;
-      line-height: 1.6;
+      color: var(--fg);
+      font-family: var(--ff-body);
+      font-size: 16px;
+      line-height: 1.7;
       overflow-x: hidden;
       padding-bottom: 60px;
     }
-
     a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
 
-    img { display: block; width: 100%; }
-
-    /* =========================================
-       UTILITY
-    ========================================= */
-    .section-divider {
-      width: 100%;
-      height: 1px;
-      background: var(--divider);
-    }
-
-    .section {
-      padding: 40px 5%;
-    }
-
-    .section-title {
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-weight: 900;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-
-    .section-title span {
-      color: var(--red);
-    }
-
-
-    /* =========================================
-       LOGO COMPONENT (paylaşımlı)
-    ========================================= */
-    .logo {
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      line-height: 1;
-      display: inline-flex;
-      align-items: baseline;
-      gap: 0.2em;
-    }
-    .logo .vinyl  { color: var(--white); }
-    .logo .transit { color: var(--red); }
-
-    /* =========================================
-       STICKY NAVBAR
-    ========================================= */
+    /* ── NAV ─────────────────── */
     #navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
+      position: fixed; top: 0; left: 0; width: 100%;
       z-index: 1000;
-      background: rgba(26, 26, 26, 0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--divider);
-      padding: 0 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-
-      /* Başlangıçta gizli — hero logosu görevini üstleniyor */
-      opacity: 0;
-      pointer-events: none;
+      padding: 0 5%; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(8,8,8,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--bdr);
+      opacity: 0; pointer-events: none;
       transform: translateY(-100%);
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
     }
+    #navbar.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
 
-    #navbar.visible {
-      opacity: 1;
-      pointer-events: all;
-      transform: translateY(0);
-    }
-
-    #navbar .logo {
-      font-size: 1.15rem;
-    }
-
-    #navbar nav {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    #navbar nav a {
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem; font-weight: 900;
+      letter-spacing: -0.01em;
+      display: inline-flex; align-items: baseline; gap: 0;
       text-transform: uppercase;
-      color: var(--grey);
+    }
+    .logo .v { color: var(--fg); }
+    .logo .dot { color: var(--fg-mut); font-size: 0.8em; margin: 0 2px; font-weight: 700; }
+    .logo .t { color: var(--red); }
+
+    .nav-links { display: flex; gap: var(--sp5); }
+    .nav-links a {
+      font-family: var(--ff-mono); font-size: 0.62rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fg-dim);
       transition: color 0.2s;
     }
+    .nav-links a:hover { color: var(--fg); }
 
-    #navbar nav a:hover { color: var(--white); }
-
-    /* Hamburger (mobil) */
     .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: var(--sp2);
+      background: none; border: none;
     }
     .hamburger span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--white);
-      transition: transform 0.3s, opacity 0.3s;
+      width: 22px; height: 1.5px; background: var(--fg);
+      transition: transform 0.3s var(--ease-out), opacity 0.3s;
     }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
     .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 64px;
-      left: 0;
-      width: 100%;
-      background: rgba(26, 26, 26, 0.98);
-      border-bottom: 1px solid var(--divider);
-      padding: 1.5rem 5%;
-      flex-direction: column;
-      gap: 1.2rem;
-      z-index: 999;
+      display: none; position: fixed; top: 64px; left: 0; width: 100%;
+      background: rgba(8,8,8,0.98); border-bottom: 1px solid var(--bdr);
+      padding: var(--sp4) 5%; flex-direction: column; gap: var(--sp4); z-index: 999;
     }
     .mobile-menu a {
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--grey);
+      font-family: var(--ff-mono); font-size: 0.72rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--fg-dim); transition: color 0.2s;
     }
-    .mobile-menu a:hover { color: var(--white); }
+    .mobile-menu a:hover { color: var(--red); }
     .mobile-menu.open { display: flex; }
 
-    /* =========================================
-       HERO
-    ========================================= */
+    /* ── HERO ─────────────────── */
     #hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      min-height: 100dvh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       text-align: center;
-      position: relative;
-      padding: 0 5%;
+      position: relative; padding: var(--sp4) 5%;
+      overflow: visible; z-index: 1;
     }
-
-    #hero .hero-logo {
-      font-size: clamp(1.8rem, 10vw, 9rem);
-      font-weight: 900;
-      letter-spacing: 0.03em;
-      line-height: 1;
-      margin-bottom: 1.8rem;
+    #hero-bg {
+      position: absolute !important; inset: 0;
+      z-index: 0 !important; overflow: hidden;
     }
-
-    #hero .manifesto {
-      font-size: clamp(0.8rem, 2vw, 1.05rem);
-      font-weight: 600;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--grey);
-      max-width: 600px;
-    }
-
-    /* Aşağı ok animasyonu */
-    .scroll-arrow {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      animation: bounce 2s infinite;
-    }
-    .scroll-arrow svg {
-      width: 28px;
-      height: 28px;
-      stroke: var(--red);
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50%       { transform: translateX(-50%) translateY(10px); }
-    }
-
-    /* =========================================
-       KARTI (paylaşımlı kart stili)
-    ========================================= */
-    .card {
-      background: var(--bg-card);
-      border-top: 3px solid transparent;
-      transition: border-color 0.25s ease, transform 0.25s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card:hover {
-      border-color: var(--red);
-      transform: translateY(-4px);
-    }
-
-    /* =========================================
-       YAZILAR
-    ========================================= */
-    #yazilar {
-      padding: 40px 5%;
-    }
-
-    .yazilar-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .yazi-card {
-      padding: 28px 24px 24px;
-    }
-
-    .yazi-card .seri {
-      display: inline-block;
-      background: var(--red);
-      color: var(--white);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      margin-bottom: 14px;
-    }
-
-    .yazi-card h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      line-height: 1.4;
-      margin-bottom: 12px;
-      color: var(--white);
-    }
-
-    .yazi-card .ozet {
-      font-size: 0.82rem;
-      color: var(--grey);
-      line-height: 1.65;
-      flex: 1;
-      margin-bottom: 20px;
-    }
-
-    .yazi-card .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: auto;
-    }
-
-    .yazi-card .tarih {
-      font-size: 0.72rem;
-      color: #666;
-      letter-spacing: 0.05em;
-    }
-
-    .btn-oku {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--red);
-      border: 1px solid var(--red);
-      padding: 5px 12px;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    .btn-oku:hover {
-      background: var(--red);
-      color: var(--white);
-    }
-
-    /* =========================================
-       MİXLER
-    ========================================= */
-    #mixler {
-      padding: 40px 5%;
-    }
-
-    .mixler-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .mix-card {
-      overflow: hidden;
-    }
-
-    /* YouTube embed wrapper — 16:9 oranını korur */
-    .yt-wrap {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%;
-      background: #111;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .yt-wrap iframe,
-    .yt-thumb {
-      position: absolute;
-      top: 0; left: 0;
+    #hero-bg img {
       width: 100%; height: 100%;
-      border: none;
+      object-fit: cover; object-position: center; display: block;
     }
-
-    .yt-thumb {
-      object-fit: cover;
-      display: block;
+    .hero-bg-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.28);
     }
+    #hero > * { position: relative; z-index: 2; }
+    #expansion-media-container { z-index: 15 !important; }
+    #expansion-content-section { z-index: 3 !important; }
 
-    /* Play butonu */
-    .yt-play {
-      position: absolute;
-      top: 50%; left: 50%;
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(3rem, 14vw, 7.5rem);
+      font-weight: 900; letter-spacing: -0.03em; line-height: 1;
+      text-transform: uppercase;
+    }
+    .hero-title .v { color: var(--fg); }
+    .hero-title .t { color: var(--red); }
+
+    #expansion-media-container {
+      position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 64px;
-      height: 64px;
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, transform 0.2s;
+      z-index: 15; border-radius: 4px; overflow: hidden;
+      background: rgba(14,14,14,0.6); backdrop-filter: blur(8px);
+      transition: none;
+    }
+    #expansion-media-container video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    #expansion-media-overlay {
+      position: absolute; inset: 0;
+      background: rgba(224,16,16,0.08);
+      border-radius: 4px; z-index: 1; pointer-events: none;
+    }
+    #expansion-content-section {
+      position: relative; z-index: 3;
+      opacity: 0; transition: opacity 0.4s var(--ease-out);
       pointer-events: none;
     }
 
-    .yt-wrap:hover .yt-play {
-      background: var(--red);
-      transform: translate(-50%, -50%) scale(1.1);
+    .scroll-arrow {
+      position: absolute; bottom: var(--sp4); left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center;
+      animation: arrowBounce 2.5s var(--ease-spring) infinite; z-index: 2;
+    }
+    .scroll-arrow svg {
+      width: 24px; height: 24px; stroke: var(--red);
+      fill: none; stroke-width: 1.5; stroke-linecap: round;
+    }
+    @keyframes arrowBounce {
+      0%,100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
+      50%      { transform: translateX(-50%) translateY(10px); opacity: 1; }
     }
 
-    .yt-play svg {
-      width: 26px;
-      height: 26px;
-      fill: var(--white);
-      margin-left: 4px; /* görsel ortalama düzeltmesi */
+    /* ── SECTION BASE ─────────── */
+    .section { padding: var(--sp6) 5%; }
+    .inner { max-width: 1280px; margin: 0 auto; }
+
+    .sec-label {
+      font-family: var(--ff-mono); font-size: 0.58rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--fg-mut); margin-bottom: var(--sp4);
+      display: flex; align-items: center; gap: var(--sp3);
+    }
+    .sec-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--bdr-2);
+    }
+    .sec-heading {
+      font-family: var(--ff-disp);
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      font-weight: 700; letter-spacing: -0.025em; line-height: 1.05;
+    }
+    .sec-heading em { font-style: italic; color: var(--red); }
+
+    .divider { width: 90%; margin: 0 auto; height: 1px; background: var(--bdr); }
+
+    /* ── REVEAL ───────────────── */
+    .reveal { opacity: 0; transform: translateY(28px); }
+    .reveal.visible { animation: revUp 0.75s var(--ease-out) forwards; }
+    .d1.visible { animation-delay: 0.1s; }
+    .d2.visible { animation-delay: 0.2s; }
+    .d3.visible { animation-delay: 0.3s; }
+    @keyframes revUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Thumbnail gizlendikten sonra iframe görünür */
-    .yt-wrap.playing .yt-thumb,
-    .yt-wrap.playing .yt-play {
-      display: none;
+    /* ── EXPANSION CONTENT ────── */
+    #expansion-content-section {
+      background: var(--bg-2);
+      padding: var(--sp6) 5%;
+      border-top: 1px solid var(--bdr);
     }
 
-    .mix-info {
-      padding: 20px 20px 18px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
+    /* ── FEATURED ─────────────── */
+    #featured { background: var(--bg-2); border-top: 1px solid var(--bdr); border-bottom: 1px solid var(--bdr); }
+    .featured-grid {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 5fr 7fr;
+      gap: var(--sp6); align-items: start;
+    }
+    .feat-img-wrap {
+      position: relative; aspect-ratio: 4/5; overflow: hidden; background: var(--bg-3);
+    }
+    .feat-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s var(--ease-out);
+    }
+    .feat-img-wrap:hover img { transform: scale(1.04); }
+    .feat-img-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,0.65) 0%, transparent 55%);
+    }
+    .feat-right { padding-top: var(--sp6); }
+    .feat-eyebrow {
+      font-family: var(--ff-mono); font-size: 0.6rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--red); margin-bottom: var(--sp3);
+    }
+    .feat-title {
+      font-family: var(--ff-disp);
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 700; line-height: 1.08; letter-spacing: -0.02em;
+      margin-bottom: var(--sp4);
+    }
+    .feat-title em { font-style: italic; color: var(--red); }
+    .feat-text {
+      font-size: 0.95rem; color: var(--fg-dim);
+      line-height: 1.85; margin-bottom: var(--sp3);
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: var(--sp2);
+      font-family: var(--ff-mono); font-size: 0.62rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fg); border: 1px solid var(--bdr-2);
+      padding: var(--sp3) var(--sp4);
+      transition: color 0.25s, border-color 0.25s, transform 0.25s var(--ease-spring);
+    }
+    .btn-ghost:hover { color: var(--red); border-color: var(--red); transform: translateY(-2px); }
+    .btn-ghost:active { transform: translateY(0); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+
+    /* ── STATS ────────────────── */
+    #stats-wrap { background: var(--bg); border-top: 1px solid var(--bdr); border-bottom: 1px solid var(--bdr); }
+    .stats-row {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3,1fr);
+    }
+    .stat-cell {
+      padding: var(--sp5) var(--sp4);
+      text-align: center;
+      border-right: 1px solid var(--bdr);
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num {
+      font-family: var(--ff-disp);
+      font-size: clamp(3.5rem, 7vw, 6rem);
+      font-weight: 700; color: var(--red);
+      line-height: 1; letter-spacing: -0.03em;
+      margin-bottom: var(--sp2);
+    }
+    .stat-lbl {
+      font-family: var(--ff-mono); font-size: 0.58rem;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-mut);
     }
 
-    .mix-info h3 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      line-height: 1.4;
+    /* ── POSTS ────────────────── */
+    #posts { background: var(--bg-2); }
+    .posts-grid {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp4);
     }
-
-    .mix-info .aciklama {
-      font-size: 0.8rem;
-      color: var(--grey);
-      line-height: 1.6;
-      flex: 1;
-      margin-bottom: 16px;
-    }
-
-    .mix-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .mix-tarih {
-      font-size: 0.7rem;
-      color: #666;
-    }
-
-    .btn-yt {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--red);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: opacity 0.2s;
-    }
-    .btn-yt:hover { opacity: 0.75; }
-
-    .btn-yt svg {
-      width: 14px;
-      height: 14px;
-      fill: var(--red);
-    }
-
-    /* =========================================
-       INSTAGRAM
-    ========================================= */
-    #yazilar {
-      padding: 40px 5%;
-    }
-
-    /* Carousel grid */
-    .carousel-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    /* Tek carousel kartı */
     .carousel-card {
-      position: relative;
-      aspect-ratio: 4 / 5;
-      overflow: hidden;
-      background: #111;
+      position: relative; aspect-ratio: 4/5; overflow: hidden;
+      background: var(--bg-3); border: 1px solid var(--bdr); cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.2);
+      transition: transform 0.35s var(--ease-spring),
+                  box-shadow 0.35s var(--ease-out), border-color 0.25s;
     }
-
-    /* Slayt şeridi */
-    .carousel-track {
-      display: flex;
-      height: 100%;
-      transition: transform 0.35s ease;
+    .carousel-card:hover {
+      transform: translateY(-8px); border-color: var(--red);
+      box-shadow: 0 6px 12px rgba(224,16,16,0.14),
+                  0 20px 48px rgba(224,16,16,0.08), 0 28px 64px rgba(0,0,0,0.3);
     }
-
-    .carousel-track img {
-      flex-shrink: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    .carousel-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--red); transform: scaleX(0); transform-origin: left; z-index: 5;
+      transition: transform 0.35s var(--ease-out);
     }
+    .carousel-card:hover::before { transform: scaleX(1); }
 
-    /* Ok butonları */
+    .carousel-track { display: flex; height: 100%; transition: transform 0.35s var(--ease-out); }
+    .carousel-track img { flex-shrink: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
     .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.5);
-      border: none;
-      color: var(--white);
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,0.65); border: none; color: var(--fg);
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0; z-index: 10; padding: 0;
       transition: opacity 0.2s, background 0.2s;
-      z-index: 10;
-      padding: 0;
     }
-
-    .carousel-btn svg {
-      width: 16px;
-      height: 16px;
-      stroke: var(--white);
-      fill: none;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
+    .carousel-btn svg { width: 16px; height: 16px; stroke: var(--fg); fill: none; stroke-width: 2.5; stroke-linecap: round; }
     .carousel-btn.prev { left: 6px; }
     .carousel-btn.next { right: 6px; }
-
     .carousel-card:hover .carousel-btn { opacity: 1; }
-    .carousel-btn:hover { background: rgba(0, 0, 0, 0.8); }
+    .carousel-btn:hover { background: rgba(0,0,0,0.88); }
+    .carousel-btn:focus-visible { opacity: 1; outline: 2px solid var(--red); }
 
-    /* Sayaç (3/9) */
     .carousel-counter {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(0, 0, 0, 0.6);
-      color: var(--white);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      padding: 2px 7px;
-      z-index: 10;
+      position: absolute; top: 8px; right: 8px;
+      background: rgba(224,16,16,0.9); color: var(--fg);
+      font-family: var(--ff-mono); font-size: 0.58rem; font-weight: 500;
+      padding: 3px 8px; z-index: 10;
     }
-
-    /* Nokta göstergesi */
     .carousel-dots {
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 5px;
-      z-index: 10;
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 90%;
+      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 4px; z-index: 10; flex-wrap: wrap; justify-content: center;
     }
-
     .carousel-dots .dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.4);
+      width: 4px; height: 4px; border-radius: 50%;
+      background: rgba(240,236,228,0.28); cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .carousel-dots .dot.active { background: var(--red); transform: scale(1.5); }
+
+    /* ── MIXES ────────────────── */
+    #videos { background: var(--bg); }
+    .mix-list { max-width: 1280px; margin: 0 auto; }
+    .mix-item {
+      display: grid; grid-template-columns: 260px 1fr auto;
+      gap: var(--sp4); align-items: center;
+      padding: var(--sp4) 0; border-bottom: 1px solid var(--bdr);
       transition: background 0.2s;
-      flex-shrink: 0;
     }
+    .mix-item:first-child { border-top: 1px solid var(--bdr); }
+    .mix-item:hover { background: rgba(224,16,16,0.04); margin: 0 calc(-5vw); padding-left: 5vw; padding-right: 5vw; }
 
-    .carousel-dots .dot.active {
-      background: var(--red);
+    .mix-thumb {
+      position: relative; aspect-ratio: 16/9; overflow: hidden; background: var(--bg-3);
     }
-
-    /* =========================================
-       HAKKINDA
-    ========================================= */
-    #hakkinda {
-      padding: 40px 5%;
+    .mix-thumb img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.45s var(--ease-out), filter 0.3s;
     }
-
-    .hakkinda-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
+    .mix-item:hover .mix-thumb img { transform: scale(1.06); filter: brightness(0.75); }
+    .mix-play {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 42px; height: 42px; background: rgba(224,16,16,0.9); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.25s, transform 0.25s var(--ease-spring);
     }
+    .mix-play svg { width: 16px; height: 16px; fill: var(--fg); margin-left: 2px; }
+    .mix-item:hover .mix-play { opacity: 1; transform: translate(-50%,-50%) scale(1.08); }
 
-    .hakkinda-metin {
-      border-left: 4px solid var(--red);
-      padding-left: 28px;
+    .mix-info { min-width: 0; }
+    .mix-num {
+      font-family: var(--ff-mono); font-size: 0.55rem;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-mut);
+      margin-bottom: var(--sp2);
     }
-
-    .hakkinda-metin p {
-      font-size: 0.9rem;
-      color: var(--grey);
-      line-height: 1.85;
-      margin-bottom: 1rem;
+    .mix-title {
+      font-family: var(--ff-disp);
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      font-weight: 700; letter-spacing: -0.01em; line-height: 1.2;
+      margin-bottom: var(--sp2);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-
-    .hakkinda-metin p:last-child { margin-bottom: 0; }
-
-    .hakkinda-stats {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
+    .mix-date { font-family: var(--ff-mono); font-size: 0.58rem; color: var(--fg-mut); }
+    .mix-action {
+      font-family: var(--ff-mono); font-size: 0.58rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--fg-mut); white-space: nowrap;
+      transition: color 0.2s; padding-right: var(--sp2);
     }
+    .mix-action:hover, .mix-item:hover .mix-action { color: var(--red); }
 
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+    /* ── NEWSLETTER ───────────── */
+    #newsletter { background: var(--bg-2); border-top: 1px solid var(--bdr); }
+    .nl-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp6); align-items: center;
     }
-
-    .stat-item .sayi {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: 900;
-      color: var(--red);
-      line-height: 1;
+    .nl-heading {
+      font-family: var(--ff-disp);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700; line-height: 1.05; letter-spacing: -0.025em;
     }
-
-    .stat-item .etiket {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--grey);
+    .nl-heading em { font-style: italic; color: var(--red); }
+    .nl-sub { font-size: 0.9rem; color: var(--fg-dim); margin-top: var(--sp3); line-height: 1.8; }
+    .nl-form { display: flex; }
+    .nl-form input {
+      flex: 1; background: var(--bg-3); border: 1px solid var(--bdr-2); border-right: none;
+      color: var(--fg); padding: var(--sp3) var(--sp4);
+      font-family: var(--ff-body); font-size: 0.9rem; outline: none;
+      transition: border-color 0.25s;
     }
-
-    /* =========================================
-       FOOTER
-    ========================================= */
-    #footer {
-      padding: 40px 5% 28px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 24px;
+    .nl-form input::placeholder { color: var(--fg-mut); }
+    .nl-form input:focus { border-color: var(--red); }
+    .nl-form button {
+      background: var(--red); color: var(--fg);
+      border: 1px solid var(--red); padding: var(--sp3) var(--sp5);
+      font-family: var(--ff-mono); font-size: 0.62rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.25s, transform 0.2s var(--ease-spring);
     }
+    .nl-form button:hover { background: var(--red-hi); transform: translateY(-1px); }
+    .nl-form button:active { transform: translateY(0); }
+    .nl-form button:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
 
-    #footer .logo {
-      font-size: 1.6rem;
+    /* ── FOOTER ───────────────── */
+    footer {
+      padding: var(--sp5) 5%;
+      background: var(--bg); border-top: 1px solid var(--bdr);
     }
-
-    .footer-links {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
+    .footer-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; flex-direction: column;
+      align-items: center; gap: var(--sp5); text-align: center;
     }
-
+    footer .logo { font-size: 1.5rem; }
+    .footer-links { display: flex; gap: var(--sp5); flex-wrap: wrap; justify-content: center; }
     .footer-links a {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--grey);
-      transition: color 0.2s;
+      font-family: var(--ff-mono); font-size: 0.58rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fg-mut); transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--red); }
+    .footer-social { display: flex; gap: var(--sp3); }
+    .footer-social a {
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--bdr-2);
+      transition: border-color 0.25s, transform 0.25s var(--ease-spring);
+    }
+    .footer-social a:hover { border-color: var(--red); transform: translateY(-4px); }
+    .footer-social svg { width: 16px; height: 16px; fill: var(--fg-dim); transition: fill 0.25s; }
+    .footer-social a:hover svg { fill: var(--red); }
+    .footer-mail { font-family: var(--ff-mono); font-size: 0.62rem; letter-spacing: 0.06em; color: var(--fg-mut); }
+    .footer-mail a:hover { color: var(--fg); }
+    .footer-copy { font-family: var(--ff-mono); font-size: 0.52rem; letter-spacing: 0.08em; color: var(--fg-mut); }
+
+    /* ── MUSIC PLAYER ─────────── */
+    #music-player {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 60px;
+      background: var(--bg-2); border-top: 1px solid var(--bdr);
+      z-index: 500; overflow: hidden;
     }
 
-    .footer-links a:hover { color: var(--white); }
-
-    .footer-mail {
-      font-size: 0.8rem;
-      color: var(--grey);
-      letter-spacing: 0.05em;
+    /* ── RESPONSIVE ───────────── */
+    @media (max-width: 1024px) {
+      .featured-grid { grid-template-columns: 1fr; gap: var(--sp5); }
+      .feat-right { padding-top: 0; }
+      .nl-inner { grid-template-columns: 1fr; gap: var(--sp4); }
+      .mix-item { grid-template-columns: 200px 1fr; }
+      .mix-action { display: none; }
     }
-
-    .footer-copy {
-      font-size: 0.68rem;
-      color: #555;
-      letter-spacing: 0.08em;
-    }
-
-    /* =========================================
-       RESPONSIVE — Tablet
-    ========================================= */
-    @media (max-width: 900px) {
-      .yazilar-grid,
-      .mixler-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .carousel-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .hakkinda-inner {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-
-      .hakkinda-stats {
-        flex-direction: row;
-        justify-content: space-around;
-      }
-    }
-
-    /* =========================================
-       RESPONSIVE — Mobil
-    ========================================= */
-    @media (max-width: 600px) {
-      .section { padding: 32px 5%; }
-      #yazilar, #mixler, #hakkinda, #footer { padding: 32px 5%; }
-
-      .yazilar-grid,
-      .mixler-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .carousel-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hakkinda-stats {
-        flex-direction: column;
-        gap: 24px;
-      }
-
-      #navbar nav { display: none; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
       .hamburger { display: flex; }
-
-      .footer-links {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
-      }
+      .posts-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(3,1fr); }
+      .stat-cell { padding: var(--sp4) var(--sp2); }
+      .mix-item { grid-template-columns: 130px 1fr; }
+      .mix-title { font-size: 1rem; }
+      .section { padding: var(--sp5) 5%; }
+    }
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: 1fr; }
+      .stat-cell { border-right: none; border-bottom: 1px solid var(--bdr); }
+      .stat-cell:last-child { border-bottom: none; }
+      .mix-item { grid-template-columns: 110px 1fr; gap: var(--sp3); }
     }
   </style>
 </head>
-
 <body>
 
-  <!-- =========================================
-       STICKY NAVBAR
-  ========================================= -->
-  <header id="navbar">
+  <nav id="navbar">
     <a href="#hero" class="logo">
-      <span class="vinyl">VINYL</span>
-      <span class="transit">TRANSIT</span>
+      <span class="v">VINYL</span><span class="dot">·</span><span class="t">TRANSIT</span>
     </a>
-
-    <nav>
-      <a href="#yazilar">Yazılar</a>
-      <a href="#mixler">Mixler</a>
-      <a href="#hakkinda">Hakkında</a>
-    </nav>
-
-    <!-- Mobil hamburger -->
+    <div class="nav-links">
+      <a href="#featured">Hakkında</a>
+      <a href="#posts">Yazılar</a>
+      <a href="#videos">Mixler</a>
+      <a href="#newsletter">İletişim</a>
+    </div>
     <button class="hamburger" id="hamburger" aria-label="Menüyü aç">
       <span></span><span></span><span></span>
     </button>
-  </header>
-
-  <!-- Mobil açılır menü -->
-  <nav class="mobile-menu" id="mobileMenu">
-    <a href="#yazilar"  onclick="closeMobileMenu()">Yazılar</a>
-    <a href="#mixler"   onclick="closeMobileMenu()">Mixler</a>
-    <a href="#hakkinda" onclick="closeMobileMenu()">Hakkında</a>
   </nav>
 
-  <!-- =========================================
-       HERO
-  ========================================= -->
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#featured" onclick="closeMobileMenu()">Hakkında</a>
+    <a href="#posts"    onclick="closeMobileMenu()">Yazılar</a>
+    <a href="#videos"   onclick="closeMobileMenu()">Mixler</a>
+    <a href="#newsletter" onclick="closeMobileMenu()">İletişim</a>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
   <section id="hero">
-    <h1 class="hero-logo logo">
-      <span class="vinyl">VINYL</span>
-      <span class="transit">TRANSIT</span>
-    </h1>
-    <p class="manifesto">KÜRASYON, ARŞİV, MİX.</p>
+    <div id="hero-bg">
+      <img src="images/hero banner/foto.png" alt="" aria-hidden="true" />
+      <div class="hero-bg-overlay"></div>
+    </div>
 
-    <!-- Aşağı ok -->
-    <a class="scroll-arrow" href="#yazilar" aria-label="Aşağı kaydır">
-      <svg viewBox="0 0 24 24">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
+    <div id="expansion-media-container" style="width:300px;height:400px;opacity:0.3;">
+      <video id="expansion-video"
+             src="images/hero banner/video.mp4"
+             poster="images/hero banner/foto.png"
+             autoplay muted loop playsinline></video>
+      <div id="expansion-media-overlay"></div>
+    </div>
+
+    <div style="position:relative;z-index:20;text-align:center;width:100%;display:flex;flex-direction:column;align-items:center;gap:24px;">
+      <h1 class="hero-title" style="display:flex;align-items:baseline;gap:0.2em;text-shadow:0 2px 32px rgba(0,0,0,0.6);">
+        <span data-text-left  class="v">VINYL</span>
+        <span data-text-right class="t">TRANSIT</span>
+      </h1>
+      <div style="display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap;">
+        <span data-text-left  style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,236,228,0.75);text-shadow:0 1px 8px rgba(0,0,0,0.8);transition:none;">DJ Portfolio</span>
+        <span data-text-right style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,236,228,0.75);text-shadow:0 1px 8px rgba(0,0,0,0.8);transition:none;">Scroll to Expand</span>
+      </div>
+    </div>
+
+    <a class="scroll-arrow" href="#featured" aria-label="Aşağı kaydır">
+      <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
     </a>
   </section>
 
-  <div class="section-divider"></div>
-
-  <!-- =========================================
-       HAKKINDA
-  ========================================= -->
-  <section id="hakkinda">
-    <h2 class="section-title reveal">Hakkımızda</h2>
-
-    <div class="hakkinda-metin reveal">
-      <p>
-        Vinyl Transit elektronik müzik odaklı bir kürasyon ve arşiv projesidir. Amaç hızlı tüketilen müzik yerine,
-        bağlamı olan, zamana dayanıklı parçaları seçmek ve paylaşmaktır.
-      </p>
-      <p>
-        Proje; techno, house, trance, dub ve deneysel elektronik müzik etrafında şekillenir. DJ mix'ler,
-        hidden track paylaşımları, yazılar ve arşiv içerikleriyle bir ses haritası oluşturur.
-      </p>
-      <p>
-        Vinyl Transit bir algoritma değil, bir seçkidir.
-      </p>
+  <!-- ═══ EXPANSION CONTENT ═══ -->
+  <section id="expansion-content-section">
+    <div class="inner">
+      <p class="sec-label">Seçilmiş İçerik</p>
+      <h2 style="font-family:var(--ff-disp);font-size:clamp(2rem,3.5vw,3rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:var(--sp4);">Underground Ses <em style="font-style:italic;color:var(--red);">Arşivi</em></h2>
+      <p style="font-size:0.95rem;color:var(--fg-dim);line-height:1.85;max-width:620px;">Her seçim bir manifestodur. Techno, house, trance, dub — bağlamı olan ve zamana dayanıklı müzik. Vinyl Transit arşivi, her hafta yeni bir katmanla büyür.</p>
     </div>
   </section>
 
-  <div class="section-divider"></div>
-
-  <!-- =========================================
-       INSTAGRAM
-  ========================================= -->
-  <section id="yazilar">
-    <h2 class="section-title reveal">YAZILAR</h2>
-
-    <div class="carousel-grid">
-
-      <!-- Post 1 — 9 slayt -->
-      <div class="carousel-card reveal" data-slides="9" data-prefix="images/post1/slide-">
-        <div class="carousel-track"></div>
-        <span class="carousel-counter">1/9</span>
-        <button class="carousel-btn prev" aria-label="Önceki">
-          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </button>
-        <button class="carousel-btn next" aria-label="Sonraki">
-          <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg>
-        </button>
-        <div class="carousel-dots"></div>
+  <!-- ═══ FEATURED ═══ -->
+  <section class="section" id="featured">
+    <div class="featured-grid">
+      <div class="feat-img-wrap reveal">
+        <img src="https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=800&q=80" alt="Vinyl koleksiyonu" loading="lazy" />
       </div>
-
-      <!-- Post 2 — 13 slayt -->
-      <div class="carousel-card reveal" data-slides="13" data-prefix="images/post2/slide-">
-        <div class="carousel-track"></div>
-        <span class="carousel-counter">1/13</span>
-        <button class="carousel-btn prev" aria-label="Önceki">
-          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </button>
-        <button class="carousel-btn next" aria-label="Sonraki">
-          <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg>
-        </button>
-        <div class="carousel-dots"></div>
+      <div class="feat-right">
+        <p class="feat-eyebrow reveal">01 — Vinyl Transit Nedir?</p>
+        <h2 class="feat-title reveal d1">Sesin<br><em>Arkeolojisi</em></h2>
+        <p class="feat-text reveal d2">Vinyl Transit, yüzeysel bir müzik listesi değil — elektronik müziğin kültürel hafızasını koruyan canlı bir arşiv. Techno'nun Berlin duvarlarından doğuşu, house'un Chicago bodrum katlarından yükselişi.</p>
+        <p class="feat-text reveal d2">Her mix seçilmiş, her parça bağlamlandırılmış. Sadece kulak dolgunluğu değil, gerçek bir anlayış.</p>
+        <a href="#posts" class="btn-ghost reveal d3">Yazıları Keşfet →</a>
       </div>
-
-      <!-- Post 3 — 14 slayt -->
-      <div class="carousel-card reveal" data-slides="14" data-prefix="images/post3/slide-">
-        <div class="carousel-track"></div>
-        <span class="carousel-counter">1/14</span>
-        <button class="carousel-btn prev" aria-label="Önceki">
-          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </button>
-        <button class="carousel-btn next" aria-label="Sonraki">
-          <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg>
-        </button>
-        <div class="carousel-dots"></div>
-      </div>
-
     </div>
   </section>
 
-  <div class="section-divider"></div>
+  <div class="divider"></div>
 
-  <!-- =========================================
-       MİXLER
-       YouTube ID'lerini aşağıdaki config nesnesinden değiştir:
-       bkz. <script> bloğu → CONFIG.mixes
-  ========================================= -->
-  <section id="mixler">
-    <h2 class="section-title reveal">Mix<span>ler</span></h2>
-
-    <div class="mixler-grid" id="mixlerGrid">
-      <!-- Kartlar JS ile oluşturulur — CONFIG.mixes'i düzenle -->
+  <!-- ═══ STATS ═══ -->
+  <section id="stats-wrap">
+    <div class="stats-row">
+      <div class="stat-cell reveal">
+        <div class="stat-num">50+</div>
+        <div class="stat-lbl">Küratöryal Mix</div>
+      </div>
+      <div class="stat-cell reveal d1">
+        <div class="stat-num">200+</div>
+        <div class="stat-lbl">Arşivlenen Parça</div>
+      </div>
+      <div class="stat-cell reveal d2">
+        <div class="stat-num">10K+</div>
+        <div class="stat-lbl">Takipçi</div>
+      </div>
     </div>
   </section>
 
-  <div class="section-divider"></div>
+  <div class="divider"></div>
 
-  <!-- =========================================
-       FOOTER
-  ========================================= -->
-  <footer id="footer">
-    <a href="#hero" class="logo">
-      <span class="vinyl">VINYL</span>
-      <span class="transit">TRANSIT</span>
-    </a>
-
-    <div class="footer-links">
-      <a href="https://www.instagram.com/vinyltransitradio/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.youtube.com/@VinylTransit" target="_blank" rel="noopener">YouTube</a>
-      <a href="https://www.mixcloud.com/vinyltransit/" target="_blank" rel="noopener">Mixcloud</a>
+  <!-- ═══ POSTS ═══ -->
+  <section class="section" id="posts">
+    <div class="inner">
+      <p class="sec-label reveal">02 — Yazılar</p>
+      <h2 class="sec-heading reveal d1" style="margin-bottom:var(--sp5);">Sesler Hakkında<br><em>Düşünceler</em></h2>
+      <div class="posts-grid">
+        <div class="carousel-card reveal" data-slides="9" data-prefix="images/post1/slide-">
+          <div class="carousel-track"></div>
+          <span class="carousel-counter">1/9</span>
+          <button class="carousel-btn prev" aria-label="Önceki"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+          <button class="carousel-btn next" aria-label="Sonraki"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></button>
+          <div class="carousel-dots"></div>
+        </div>
+        <div class="carousel-card reveal d1" data-slides="13" data-prefix="images/post2/slide-">
+          <div class="carousel-track"></div>
+          <span class="carousel-counter">1/13</span>
+          <button class="carousel-btn prev" aria-label="Önceki"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+          <button class="carousel-btn next" aria-label="Sonraki"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></button>
+          <div class="carousel-dots"></div>
+        </div>
+        <div class="carousel-card reveal d2" data-slides="14" data-prefix="images/post3/slide-">
+          <div class="carousel-track"></div>
+          <span class="carousel-counter">1/14</span>
+          <button class="carousel-btn prev" aria-label="Önceki"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+          <button class="carousel-btn next" aria-label="Sonraki"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></button>
+          <div class="carousel-dots"></div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <p class="footer-mail">vinyltransitradio@gmail.com</p>
-    <p class="footer-copy">&copy; 2026 Vinyl Transit — Tüm hakları saklıdır.</p>
+  <div class="divider"></div>
+
+  <!-- ═══ MIXES ═══ -->
+  <section class="section" id="videos">
+    <div class="inner">
+      <p class="sec-label reveal">03 — Mixler</p>
+      <h2 class="sec-heading reveal d1" style="margin-bottom:var(--sp5);">Canlı <em>Setler</em></h2>
+      <div class="mix-list" id="mixGrid"></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══ NEWSLETTER ═══ -->
+  <section class="section" id="newsletter">
+    <div class="nl-inner">
+      <div>
+        <h2 class="nl-heading reveal">Arşive<br><em>Abone Ol</em></h2>
+        <p class="nl-sub reveal d1">Yeni mix'ler, yazılar ve arşiv güncellemelerini ilk sen al. Haftada bir, fazlası değil.</p>
+      </div>
+      <div class="reveal d2">
+        <form class="nl-form" onsubmit="handleNewsletter(event)">
+          <input type="email" placeholder="e-posta adresiniz" required aria-label="E-posta" />
+          <button type="submit">Abone Ol</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-inner">
+      <a href="#hero" class="logo">
+        <span class="v">VINYL</span><span class="dot">·</span><span class="t">TRANSIT</span>
+      </a>
+      <div class="footer-links">
+        <a href="https://www.instagram.com/vinyltransitradio/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/@VinylTransit" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.mixcloud.com/vinyltransit/" target="_blank" rel="noopener">Mixcloud</a>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/vinyltransitradio/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.266.069 1.646.069 4.85 0 3.204-.012 3.584-.07 4.85-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.322a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@VinylTransit" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="https://www.mixcloud.com/vinyltransit/" target="_blank" rel="noopener" aria-label="Mixcloud">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0m5.53 15.39c-1.25 1.25-3.27 1.25-4.52 0L12 14.33l-1.01 1.06c-1.25 1.25-3.27 1.25-4.52 0-1.25-1.25-1.25-3.27 0-4.52L7.65 12l-1.01-1.06c-1.25-1.25-1.25-3.27 0-4.52 1.25-1.25 3.27-1.25 4.52 0L12 9.67l1.01-1.06c1.25-1.25 3.27-1.25 4.52 0 1.25 1.25 1.25 3.27 0 4.52L16.35 12l1.01 1.06c1.25 1.25 1.25 3.27 0 4.52"/></svg>
+        </a>
+      </div>
+      <p class="footer-mail"><a href="mailto:vinyltransitradio@gmail.com">vinyltransitradio@gmail.com</a></p>
+      <p class="footer-copy">&copy; 2026 Vinyl Transit — Tüm hakları saklıdır.</p>
+    </div>
   </footer>
 
+  <div id="music-player">
+    <iframe width="100%" height="60"
+      src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fvinyltransit%2Fvinyl-transit-underground-techno-mix-001%2F"
+      frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+  </div>
 
-  <!-- =========================================
-       JAVASCRIPT
-  ========================================= -->
+  <script src="scroll-expansion.js"></script>
   <script>
-    /* ------------------------------------------
-       CONFIG — YouTube mix ID'lerini burada değiştir
-    ------------------------------------------ */
     const CONFIG = {
       mixes: [
-        { id: 'DPeJ2OT6PMk' },
-        { id: 'Lo9mKl-2Z9M' },
-        { id: '9KzjbyCAAsQ' }
+        { id: 'DPeJ2OT6PMk', title: 'Underground Techno Mix 001', date: '22 Mart 2026' },
+        { id: 'Lo9mKl-2Z9M', title: 'Deep House Journey — Part 1', date: '15 Mart 2026' },
+        { id: '9KzjbyCAAsQ', title: 'Retro Synthwave Session',     date: '08 Mart 2026' }
       ]
     };
 
-    /* ------------------------------------------
-       Mix kartlarını oluştur
-    ------------------------------------------ */
-    (function buildMixes() {
-      const grid = document.getElementById('mixlerGrid');
-      if (!grid) return;
-
-      CONFIG.mixes.forEach(function(mix) {
-        const card = document.createElement('div');
-        card.className = 'card mix-card reveal';
-
-        card.innerHTML = `
-          <div class="yt-wrap" data-id="${mix.id}">
-            <img
-              class="yt-thumb"
-              src="https://img.youtube.com/vi/${mix.id}/maxresdefault.jpg"
-              alt="Vinyl Transit Mix"
-              loading="lazy"
-            />
-            <div class="yt-play">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="5,3 19,12 5,21"/>
-              </svg>
-            </div>
-          </div>
-          <div class="mix-info">
-            <div class="mix-footer">
-              <a class="btn-yt"
-                 href="https://www.youtube.com/watch?v=${mix.id}"
-                 target="_blank"
-                 rel="noopener">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
-                </svg>
-                YouTube'da İzle
-              </a>
-            </div>
-          </div>
-        `;
-
-        // Tıklayınca thumbnail'i kaldır, iframe yükle
-        card.querySelector('.yt-wrap').addEventListener('click', function() {
-          const wrap = this;
-          const id   = wrap.dataset.id;
-          wrap.classList.add('playing');
-          const iframe = document.createElement('iframe');
-          iframe.src         = 'https://www.youtube-nocookie.com/embed/' + id + '?rel=0&modestbranding=1&autoplay=1';
-          iframe.title       = 'Vinyl Transit Mix';
-          iframe.allow       = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-          iframe.allowFullscreen = true;
-          wrap.appendChild(iframe);
-        });
-
-        grid.appendChild(card);
-      });
-
+    /* Navbar show after hero */
+    (function() {
+      const navbar = document.getElementById('navbar');
+      const hero   = document.getElementById('hero');
+      new IntersectionObserver(entries => {
+        navbar.classList.toggle('visible', !entries[0].isIntersecting);
+      }, { threshold: 0.1 }).observe(hero);
     })();
 
-    /* ------------------------------------------
-       STICKY NAVBAR — hero geçince göster
-    ------------------------------------------ */
-    (function initNavbar() {
-      const navbar   = document.getElementById('navbar');
-      const hero     = document.getElementById('hero');
-      const heroLogo = hero.querySelector('.hero-logo');
-
-      const observer = new IntersectionObserver(
-        function(entries) {
-          entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-              navbar.classList.remove('visible');
-            } else {
-              navbar.classList.add('visible');
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-
-      observer.observe(heroLogo);
-    })();
-
-    /* ------------------------------------------
-       MOBİL HAMBURGER MENÜ
-    ------------------------------------------ */
-    (function initHamburger() {
+    /* Hamburger */
+    (function() {
       const btn  = document.getElementById('hamburger');
       const menu = document.getElementById('mobileMenu');
       if (!btn || !menu) return;
-
-      btn.addEventListener('click', function() {
-        const isOpen = menu.classList.toggle('open');
-        btn.classList.toggle('open', isOpen);
-        btn.setAttribute('aria-expanded', isOpen);
+      btn.addEventListener('click', () => {
+        const open = menu.classList.toggle('open');
+        btn.classList.toggle('open', open);
       });
     })();
 
     function closeMobileMenu() {
-      const btn  = document.getElementById('hamburger');
-      const menu = document.getElementById('mobileMenu');
-      if (menu) menu.classList.remove('open');
-      if (btn)  btn.classList.remove('open');
+      document.getElementById('hamburger')?.classList.remove('open');
+      document.getElementById('mobileMenu')?.classList.remove('open');
     }
 
-    /* ------------------------------------------
-       CAROUSEL — Instagram bölümü
-       Görseller: images/postN/slide-01.jpg ... slide-NN.jpg
-    ------------------------------------------ */
-    (function initCarousels() {
-      document.querySelectorAll('.carousel-card').forEach(function(card) {
-        const total   = parseInt(card.dataset.slides, 10);
-        const prefix  = card.dataset.prefix;          // örn. "images/post1/slide-"
-        const track   = card.querySelector('.carousel-track');
-        const counter = card.querySelector('.carousel-counter');
-        const dotsEl  = card.querySelector('.carousel-dots');
-        const prevBtn = card.querySelector('.carousel-btn.prev');
-        const nextBtn = card.querySelector('.carousel-btn.next');
+    /* Scroll reveal */
+    (function() {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    })();
 
-        let current = 0;
+    /* Build mix list */
+    (function() {
+      const grid = document.getElementById('mixGrid');
+      if (!grid) return;
+      CONFIG.mixes.forEach((mix, i) => {
+        const item = document.createElement('div');
+        item.className = 'mix-item reveal' + (i > 0 ? ' d' + i : '');
+        item.innerHTML = `
+          <div class="mix-thumb">
+            <img src="https://img.youtube.com/vi/${mix.id}/maxresdefault.jpg" alt="${mix.title}" loading="lazy" />
+            <div class="mix-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+          </div>
+          <div class="mix-info">
+            <p class="mix-num">${String(i+1).padStart(2,'0')} — Mix</p>
+            <h3 class="mix-title">${mix.title}</h3>
+            <p class="mix-date">${mix.date}</p>
+          </div>
+          <a href="https://www.youtube.com/watch?v=${mix.id}" target="_blank" rel="noopener" class="mix-action">YouTube'da İzle →</a>
+        `;
+        const thumb = item.querySelector('.mix-thumb');
+        thumb.style.cursor = 'pointer';
+        thumb.addEventListener('click', e => {
+          e.preventDefault();
+          thumb.querySelector('img').style.display = 'none';
+          thumb.querySelector('.mix-play').style.display = 'none';
+          const iframe = document.createElement('iframe');
+          iframe.src = `https://www.youtube-nocookie.com/embed/${mix.id}?rel=0&modestbranding=1&autoplay=1`;
+          iframe.title = mix.title;
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+          iframe.allowFullscreen = true;
+          iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:none;';
+          thumb.style.position = 'relative';
+          thumb.appendChild(iframe);
+        });
+        grid.appendChild(item);
+      });
+      /* re-observe newly added reveal items */
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
+      grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    })();
 
-        // Görselleri oluştur
+    /* Newsletter */
+    function handleNewsletter(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      const orig = btn.textContent;
+      btn.textContent = '✓ Başarılı!';
+      e.target.reset();
+      setTimeout(() => { btn.textContent = orig; }, 3000);
+    }
+
+    /* Carousels */
+    (function() {
+      document.querySelectorAll('.carousel-card').forEach(card => {
+        const total  = parseInt(card.dataset.slides, 10);
+        const prefix = card.dataset.prefix;
+        const track  = card.querySelector('.carousel-track');
+        const counter= card.querySelector('.carousel-counter');
+        const dots   = card.querySelector('.carousel-dots');
+        const prev   = card.querySelector('.carousel-btn.prev');
+        const next   = card.querySelector('.carousel-btn.next');
+        let cur = 0;
+
         for (let i = 1; i <= total; i++) {
           const img = document.createElement('img');
-          const num = String(i).padStart(2, '0');
-          img.src   = prefix + num + '.png';
-          img.alt   = 'Slayt ' + i;
+          img.src = prefix + String(i).padStart(2,'0') + '.png';
+          img.alt = 'Slayt ' + i;
           img.loading = i === 1 ? 'eager' : 'lazy';
           track.appendChild(img);
         }
-
-        // Noktaları oluştur
         for (let i = 0; i < total; i++) {
           const dot = document.createElement('span');
           dot.className = 'dot' + (i === 0 ? ' active' : '');
-          dot.addEventListener('click', function() { goTo(i); });
-          dotsEl.appendChild(dot);
+          dot.addEventListener('click', () => go(i));
+          dots.appendChild(dot);
         }
-
-        function goTo(index) {
-          current = (index + total) % total;
-          track.style.transform = 'translateX(-' + (current * 100) + '%)';
-          counter.textContent   = (current + 1) + '/' + total;
-          dotsEl.querySelectorAll('.dot').forEach(function(d, i) {
-            d.classList.toggle('active', i === current);
-          });
+        function go(idx) {
+          cur = (idx + total) % total;
+          track.style.transform = `translateX(-${cur * 100}%)`;
+          counter.textContent = (cur + 1) + '/' + total;
+          dots.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
         }
-
-        prevBtn.addEventListener('click', function() { goTo(current - 1); });
-        nextBtn.addEventListener('click', function() { goTo(current + 1); });
-
-        // Dokunmatik kaydırma (mobil)
-        let touchStartX = 0;
-        card.addEventListener('touchstart', function(e) {
-          touchStartX = e.changedTouches[0].clientX;
-        }, { passive: true });
-        card.addEventListener('touchend', function(e) {
-          const diff = touchStartX - e.changedTouches[0].clientX;
-          if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+        prev.addEventListener('click', () => go(cur - 1));
+        next.addEventListener('click', () => go(cur + 1));
+        let tx = 0;
+        card.addEventListener('touchstart', e => { tx = e.changedTouches[0].clientX; }, { passive: true });
+        card.addEventListener('touchend',   e => {
+          const diff = tx - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 40) go(diff > 0 ? cur + 1 : cur - 1);
         }, { passive: true });
       });
     })();
   </script>
-
-
-  <!-- =========================================
-       SABİT MÜZİK PLAYER
-  ========================================= -->
-  <div id="music-player" style="position:fixed;bottom:0;left:0;right:0;height:60px;background:#111111;border-top:1px solid #333;z-index:1000;overflow:hidden;">
-    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fvinyltransit%2Fvinyl-transit-underground-techno-mix-001%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
-  </div>
 
 </body>
 </html>
